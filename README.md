@@ -2,6 +2,8 @@
 
 Unlike more modern graphics APIs the Nintendo Wii U does not have a online shader compiler, so the shaders have to be pre-compiled, stored, and embedded into the program or stored in the file system. The most common format for such shader binaries is GFD (`.gsh` / `.gtx`). This crate enables easy serializing / deserializing of the binary format.
 
+**This crate does not provide a shader compiler**.
+
 # Sources
 
 - [Gfx2 - Nintendo File Formats](https://nintendo-formats.com/libs/gfd/gfx2.html)
