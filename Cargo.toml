@@ -3,7 +3,7 @@ name = "gfd"
 version = "0.1.0"
 edition = "2024"
 readme = "README.md"
-license = "MIT"
+license-file = "LICENSE"
 description = "Read and write GFD shader binaries."
 
 [features]
