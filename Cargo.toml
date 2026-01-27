@@ -1,0 +1,14 @@
+[package]
+name = "gfd"
+version = "0.1.0"
+edition = "2024"
+readme = "README.md"
+license = "MIT"
+description = "Read and write GFD shader binaries."
+
+[features]
+default = []
+std = ["deku/std"]
+
+[dependencies]
+deku = { version = "0.20.2", default-features = false, features = ["alloc"] }
