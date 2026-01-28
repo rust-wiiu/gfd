@@ -6,11 +6,11 @@ Unlike more modern graphics APIs the Nintendo Wii U does not have a online shade
 
 ## Usage
 
-```rust
+```rust,no_run
 use gfd::GFD;
 use std::fs;
 
-let file = fs::read("./shader.gsh").unwrap();
+let file = fs::read("shader.gsh").unwrap();
 let gfd = GFD::try_from(file.as_ref()).unwrap();
 ```
 
