@@ -1,6 +1,6 @@
 # GFD - Nintendo Wii U™ Shader Binary Format
 
-Unlike more modern graphics APIs the Nintendo Wii U does not have a online shader compiler, so the shaders have to be pre-compiled, stored, and embedded into the program or stored in the file system. The most common format for such shader binaries is GFD (`.gsh` / `.gtx`). This crate enables easy serializing / deserializing of the binary format.
+Unlike more modern graphics APIs the Nintendo Wii U does not have a online shader compiler, so the shaders have to be pre-compiled and embedded into the program or stored in the file system. The most common format for such shader binaries is GFD (`.gsh` / `.gtx`). This crate enables easy parsing of the binary format into "Rust-native" structures (Vec & String instead of raw pointers).
 
 **This crate does not provide a shader compiler**.
 
@@ -10,11 +10,9 @@ Unlike more modern graphics APIs the Nintendo Wii U does not have a online shade
 use gfd::GFD;
 use std::fs;
 
-let file = fs::read("shader.gsh").unwrap();
-let gfd = GFD::try_from(file.as_ref()).unwrap();
+let bytes = fs::read("shader.gsh").unwrap();
+let gfd = GFD::parse(&bytes).unwrap();
 ```
-
-The crate is `no_std` by default. std features of [deku](https://docs.rs/deku/latest/deku/), the underlying binary parser, can be enabled with the `std` feature flag.
 
 ## Sources
 
