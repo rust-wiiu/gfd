@@ -1,5 +1,7 @@
 use byteorder::{BigEndian, ReadBytesExt};
 use num_enum::{IntoPrimitive, TryFromPrimitive};
+use serde::{Deserialize, Serialize};
+use serde_big_array::BigArray;
 
 use std::io::Cursor;
 
@@ -29,7 +31,9 @@ trait Parse {
     fn parse(data: &[u8], offset: usize) -> Self;
 }
 
-#[derive(Debug, Clone, Copy, PartialEq, IntoPrimitive, TryFromPrimitive)]
+#[derive(
+    Debug, Clone, Copy, PartialEq, IntoPrimitive, TryFromPrimitive, Serialize, Deserialize,
+)]
 #[repr(u32)]
 enum BlockType {
     EndOfFile = 1,
@@ -48,7 +52,7 @@ enum BlockType {
     ComputeProgram = 15,
 }
 
-#[derive(Debug, Clone, PartialEq)]
+#[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
 pub enum Block {
     EndOfFile,
     Padding,
@@ -58,8 +62,9 @@ pub enum Block {
     FragmentProgram(Vec<u8>),
 }
 
-#[derive(Debug, Clone, PartialEq)]
+#[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
 pub struct VertexHeader {
+    #[serde(with = "BigArray")]
     pub registers: [u32; 52],
     pub program_size: u32,
     // pub program_ptr: u32,
@@ -120,8 +125,9 @@ impl Parse for VertexHeader {
     }
 }
 
-#[derive(Debug, Clone, PartialEq)]
+#[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
 pub struct FragmentHeader {
+    #[serde(with = "BigArray")]
     pub registers: [u32; 41],
     pub program_size: u32,
     // pub program_ptr: u32,
@@ -170,7 +176,7 @@ impl Parse for FragmentHeader {
     }
 }
 
-#[derive(Debug, Clone, PartialEq)]
+#[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
 pub struct UniformBlock {
     pub name: String,
     pub offset: u32,
@@ -191,7 +197,7 @@ impl Parse for UniformBlock {
     }
 }
 
-#[derive(Debug, Clone, PartialEq)]
+#[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
 pub struct UniformVar {
     pub name: String,
     pub ty: VarType,
@@ -216,7 +222,7 @@ impl Parse for UniformVar {
     }
 }
 
-#[derive(Debug, Clone, PartialEq)]
+#[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
 pub struct InitialValue {
     pub value: [f32; 4],
     pub offset: u32,
@@ -235,7 +241,7 @@ impl Parse for InitialValue {
     }
 }
 
-#[derive(Debug, Clone, PartialEq)]
+#[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
 pub struct LoopVar {
     pub offset: u32,
     pub value: u32,
@@ -254,7 +260,7 @@ impl Parse for LoopVar {
     }
 }
 
-#[derive(Debug, Clone, PartialEq, IntoPrimitive, TryFromPrimitive)]
+#[derive(Debug, Clone, PartialEq, IntoPrimitive, TryFromPrimitive, Serialize, Deserialize)]
 #[repr(u32)]
 pub enum SamplerType {
     D1 = 0,
@@ -263,7 +269,7 @@ pub enum SamplerType {
     Cube = 3,
 }
 
-#[derive(Debug, Clone, PartialEq)]
+#[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
 pub struct SamplerVar {
     pub name: String,
     pub ty: SamplerType,
@@ -284,7 +290,7 @@ impl Parse for SamplerVar {
     }
 }
 
-#[derive(Debug, Clone, PartialEq, IntoPrimitive, TryFromPrimitive)]
+#[derive(Debug, Clone, PartialEq, IntoPrimitive, TryFromPrimitive, Serialize, Deserialize)]
 #[repr(u32)]
 pub enum VarType {
     Void = 0,
@@ -328,7 +334,7 @@ pub enum VarType {
     Double4x4 = 38,
 }
 
-#[derive(Debug, Clone, PartialEq)]
+#[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
 pub struct AttributeVar {
     pub name: String,
     pub ty: VarType,
@@ -351,7 +357,7 @@ impl Parse for AttributeVar {
     }
 }
 
-#[derive(Debug, Clone, PartialEq)]
+#[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
 pub struct Buffer {
     pub flags: u32,
     pub elem_size: u32,
@@ -359,7 +365,7 @@ pub struct Buffer {
     pub ptr: u32,
 }
 
-#[derive(Debug, Clone, PartialEq, IntoPrimitive, TryFromPrimitive)]
+#[derive(Debug, Clone, PartialEq, IntoPrimitive, TryFromPrimitive, Serialize, Deserialize)]
 #[repr(u32)]
 pub enum ShaderMode {
     UniformRegister = 0,
@@ -368,7 +374,7 @@ pub enum ShaderMode {
     ComputeShader = 3,
 }
 
-#[derive(Debug, Clone, PartialEq)]
+#[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
 pub struct Gfd {
     pub aligned: bool,
     pub padding: u64,
