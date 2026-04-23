@@ -6,12 +6,23 @@ Unlike more modern graphics APIs the Nintendo Wii U does not have a online shade
 
 ## Usage
 
+### Cargo.toml
+
+```
+[dependencies]
+gfd = { git = "https://github.com/rust-wiiu/gfd", tag = "v0.2.0" }
+```
+
+### main.rs
+
 ```rust,no_run
 use gfd::GFD;
 use std::fs;
 
-let bytes = fs::read("shader.gsh").unwrap();
-let gfd = GFD::parse(&bytes).unwrap();
+fn main() {
+    let bytes = fs::read("shader.gsh").unwrap();
+    let gfd = GFD::parse(&bytes).unwrap();
+}
 ```
 
 ## Sources
