@@ -5,10 +5,8 @@ edition = "2024"
 readme = "README.md"
 license-file = "LICENSE"
 description = "Read and write GFD shader binaries."
-
-[features]
-default = ["std"]
-std = []
+repository = "https://github.com/rust-wiiu/gfd"
+documentation = "https://github.com/rust-wiiu/gfd"
 
 [dependencies]
 byteorder = "1.5.0"
