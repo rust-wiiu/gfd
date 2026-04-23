@@ -7,8 +7,12 @@ license-file = "LICENSE"
 description = "Read and write GFD shader binaries."
 
 [features]
-default = []
-std = ["deku/std"]
+default = ["std"]
+std = []
 
 [dependencies]
-deku = { version = "0.20.2", default-features = false, features = ["alloc"] }
+byteorder = "1.5.0"
+num_enum = "0.7.6"
+
+[dev-dependencies]
+pretty_assertions = "1.4.1"
